@@ -3,29 +3,29 @@ import { Construct } from '@aws-cdk/core';
 import * as ssp from '@aws-quickstart/ssp-amazon-eks';
 import { HelmAddOn, HelmAddOnProps, HelmAddOnUserProps } from '@aws-quickstart/ssp-amazon-eks/dist/addons/helm-addon';
 
-export interface MyFluentBitAddOnProps extends HelmAddOnUserProps {
+export interface RezilionAddOnProps extends HelmAddOnUserProps {
     cloudWatchRegion: string
 }
 
 
-export const defaultProps: HelmAddOnProps & MyFluentBitAddOnProps = {
-    chart: 'aws-for-fluent-bit',
+export const defaultProps: HelmAddOnProps & RezilionAddOnProps = {
+    chart: 'aws-cloudwatch-metrics',
     cloudWatchRegion: 'us-east-1',
-    name: 'my-addon',
+    name: 'rezilion-test-addon',
     namespace: 'kube-system',
-    release: 'ssp-addon-myextension-fluent-bit',
-    version: '0.1.11',
+    release: 'ssp-addon-myextension-rezilion-test',
+    version: '0.0.6',
     repository: 'https://aws.github.io/eks-charts',
     values: {}
 }
 
-export class MyFluentBitAddOn extends HelmAddOn {
+export class RezilionAddOn extends HelmAddOn {
 
-    readonly options: MyFluentBitAddOnProps;
+    readonly options: RezilionAddOnProps;
 
-    constructor(props: MyFluentBitAddOnProps) {
+    constructor(props: RezilionAddOnProps) {
         super({...defaultProps, ...props});
-        this.options = this.props as MyFluentBitAddOnProps;
+        this.options = this.props as RezilionAddOnProps;
     }
 
     deploy(clusterInfo: ssp.ClusterInfo): void | Promise<Construct> {
