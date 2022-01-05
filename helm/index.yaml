@@ -9,5 +9,5 @@ entries:
     name: rezilion
     type: application
     urls:
-    - https://github.com/Rezilion/rezilion-ssp-addon/helm/rezilion-addon.tgz
+    - https://github.com/Rezilion/rezilion-ssp-addon/raw/main/helm/rezilion-0.0.1.tgz
     version: 0.0.1

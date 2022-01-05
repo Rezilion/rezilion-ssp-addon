@@ -9,13 +9,13 @@ export interface RezilionAddOnProps extends HelmAddOnUserProps {
 
 
 export const defaultProps: HelmAddOnProps & RezilionAddOnProps = {
-    chart: 'aws-cloudwatch-metrics',
+    chart: 'rezilion',
     cloudWatchRegion: 'us-east-1',
-    name: 'rezilion-test-addon',
+    name: 'rezilion-addon',
     namespace: 'kube-system',
-    release: 'ssp-addon-myextension-rezilion-test',
-    version: '0.0.6',
-    repository: 'https://aws.github.io/eks-charts',
+    release: 'rezilion',
+    version: '0.0.1',
+    repository: 'https://github.com/Rezilion/rezilion-ssp-addon/',
     values: {}
 }
 
@@ -29,8 +29,8 @@ export class RezilionAddOn extends HelmAddOn {
     }
 
     deploy(clusterInfo: ssp.ClusterInfo): void | Promise<Construct> {
-        const serviceAccountName = 'aws-for-fluent-bit-sa';
-        const sa = clusterInfo.cluster.addServiceAccount('my-aws-for-fluent-bit-sa', {
+        const serviceAccountName = 'aws-for-rezilion-sa';
+        const sa = clusterInfo.cluster.addServiceAccount('my-aws-for-rezilion-sa', {
             name: serviceAccountName,
             namespace: this.props.namespace
         });
