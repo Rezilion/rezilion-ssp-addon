@@ -15,7 +15,7 @@ export const defaultProps: HelmAddOnProps & RezilionAddOnProps = {
     namespace: 'kube-system',
     release: 'rezilion',
     version: '0.0.1',
-    repository: 'https://github.com/Rezilion/rezilion-ssp-addon/',
+    repository: 'https://github.com/Rezilion/rezilion-ssp-addon/tree/main/helm/',
     values: {}
 }
 
