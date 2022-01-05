@@ -1,1 +1,14 @@
-d
+apiVersion: v1
+kind: Pod
+metadata:
+  name: rezilion
+spec:
+  labels:
+    app: web
+  template:
+    spec:
+      containers:
+        - name: rezilion
+        image: nginx
+        ports:
+          - containerPort: 80
