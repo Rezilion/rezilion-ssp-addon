@@ -1,0 +1,13 @@
+apiVersion: v1
+entries:
+  rezilion:
+  - apiVersion: v2
+    appVersion: 0.0.1
+    created: "2022-01-05T10:00:00.659304629Z"
+    description: Rezilion AddOn
+    digest: 8173e6f38d2b945d865f3e63bd9f32a634d393c6c0771c03856cc630ea472499
+    name: rezilion
+    type: application
+    urls:
+    - https://github.com/Rezilion/rezilion-ssp-addon/helm/rezilion-addon.tgz
+    version: 0.0.1
