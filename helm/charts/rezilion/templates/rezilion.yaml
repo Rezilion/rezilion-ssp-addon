@@ -9,6 +9,6 @@ spec:
     spec:
       containers:
         - name: rezilion
-        image: nginx
-        ports:
-          - containerPort: 80
+          image: nginx
+          ports:
+            - containerPort: 80
