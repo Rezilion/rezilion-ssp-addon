@@ -1,12 +1,22 @@
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: rezilion
+  name: rezilion-app
   labels:
-    app: web
+    app: rezilion-app
 spec:
-  containers:
-    - name: rezilion
-      image: nginx
-      ports:
-        - containerPort: 80
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rezilion-app
+  template:
+    metadata:
+      labels:
+        app: rezilion-app
+    spec:
+      containers:
+        - name: rezilion-app
+          image: nginx
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
