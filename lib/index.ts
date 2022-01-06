@@ -11,7 +11,7 @@ export interface RezilionAddOnProps extends HelmAddOnUserProps {
 export const defaultProps: HelmAddOnProps & RezilionAddOnProps = {
     chart: 'rezilion',
     cloudWatchRegion: 'us-east-1',
-    name: 'rezilion-addon',
+    name: 'rezilion',
     namespace: 'kube-system',
     release: 'rezilion',
     version: '0.0.1',
