@@ -1,4 +1,3 @@
-{{- range .Values.applications }}
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -107,7 +106,7 @@ spec:
             - name: HERMES_EXECUTION_WITHOUT_CGROUPS
               value: periodic-run
             - name: COMMON_API_KEY
-              value: {{ .apiKey }}
+              value: {{ .Values.apiKey }}
           volumeMounts:
           - name: hermes-claim1
             mountPath: /var/run/docker.sock
