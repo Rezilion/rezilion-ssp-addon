@@ -1,22 +1,122 @@
-apiVersion: apps/v1
-kind: Deployment
+{{- range .Values.applications }}
+---
+apiVersion: v1
+kind: ServiceAccount
 metadata:
-  name: rezilion-app
+  name: hermes
+  namespace: rezilion
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRole
+metadata:
+  name: hermes
+  namespace: rezilion
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - pods
+      - namespaces
+      - nodes
+      - pods/exec
+    verbs:
+      - get
+      - list
+      - watch
+      - delete
+      - create
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: hermes
+roleRef:
+  kind: ClusterRole
+  name: hermes
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+  - kind: ServiceAccount
+    name: hermes
+    namespace: rezilion
+---
+apiVersion: apps/v1 
+kind: DaemonSet 
+metadata: 
+  name: rezilion-hermes
+  namespace: rezilion
   labels:
-    app: rezilion-app
+    k8s-app: hermes
 spec:
-  replicas: 1
   selector:
-    matchLabels:
-      app: rezilion-app
-  template:
+    matchLabels: 
+      name: rezilion-hermes
+  template: 
     metadata:
       labels:
-        app: rezilion-app
+        name: rezilion-hermes
     spec:
+      hostNetwork: true
+      hostPID: true
+      restartPolicy: Always
+      serviceAccount: hermes
+      serviceAccountName: hermes
+      imagePullSecrets:
+      - name: rezilioncreds
       containers:
-        - name: rezilion-app
-          image: nginx
+        - name: rezilion-hermes
+          image: ngnix
+          resources:
+            requests:
+              memory: "500M"
+              cpu: "200m"
+            limits:
+              memory: "500M"
+              cpu: "200m"
+          readinessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - ps -ef | grep maia | grep -v grep || echo "FIXME"
           imagePullPolicy: Always
-          ports:
-            - containerPort: 80
+          securityContext:
+            privileged: true
+            capabilities:
+              add:
+                - SYS_PTRACE
+                - SYS_ADMIN
+          env:
+            - name: HOST_ROOT
+              value: /tmp/host_root
+            - name: HERMES_HOST_SCOPE
+              value: packages
+            - name: HERMES_CONTAINERS_SCOPE
+              value: all
+            - name: HERMES_IDENTIFIER
+              value: hostname
+            - name: HERMES_LIFE_TIME
+              value: 12h
+            - name: HERMES_SAMPLE_INTERVAL
+              value: 1m
+            - name: HERMES_ACCEPTED_EULA
+              value: "yes"
+            - name: HERMES_UPLOAD_INTERVAL
+              value: 10m
+            - name: HERMES_DESTINATION
+              value: /tmp/hermes
+            - name: HERMES_EXECUTION_WITHOUT_CGROUPS
+              value: periodic-run
+            - name: COMMON_API_KEY
+              value: {{ .apiKey }}
+          volumeMounts:
+          - name: hermes-claim1
+            mountPath: /var/run/docker.sock
+          - name: hermes-claim2
+            mountPath: /tmp/host_root
+      volumes:
+      - name: hermes-claim1
+        hostPath:
+          path: /var/run/docker.sock
+      - name: hermes-claim2
+        hostPath:
+          path: /
