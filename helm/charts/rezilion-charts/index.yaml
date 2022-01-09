@@ -3,12 +3,12 @@ entries:
   rezilion:
   - apiVersion: v2
     appVersion: 0.0.1
-    created: "2022-01-09T16:40:34.802022503+02:00"
+    created: "2022-01-09T17:49:04.93195682+02:00"
     description: Rezilion AddOn
     digest: 72631d5dd2dcdf44dc58887cf79f8fa6db436dbc784c4da2e0488e26ed758a08
     name: rezilion
     type: application
     urls:
-    - https://lzl-ssp-helm-test.s3.eu-west-1.amazonaws.com/rezilion-0.0.1.tgz/rezilion-0.0.1.tgz
+    - https://lzl-ssp-helm-test.s3.eu-west-1.amazonaws.com/rezilion-0.0.1.tgz
     version: 0.0.1
-generated: "2022-01-09T16:40:34.798287756+02:00"
+generated: "2022-01-09T17:49:04.928618718+02:00"
