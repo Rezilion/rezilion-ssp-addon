@@ -6,6 +6,7 @@ const app = new App();
 
 ssp.EksBlueprint.builder()
     .addOns(new RezilionAddOn({
-        cloudWatchRegion: 'us-east-1'
+        cloudWatchRegion: 'us-east-1',
+        values: {api_key: 'dynamic_test_api_key'}
     }))
     .build(app, 'ssp-addon-myextension-rezilion-test');

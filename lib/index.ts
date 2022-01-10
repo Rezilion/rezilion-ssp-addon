@@ -1,6 +1,7 @@
 import { ManagedPolicy } from '@aws-cdk/aws-iam';
 import { Construct } from '@aws-cdk/core';
 import * as ssp from '@aws-quickstart/ssp-amazon-eks';
+import merge from "ts-deepmerge";
 import { HelmAddOn, HelmAddOnProps, HelmAddOnUserProps } from '@aws-quickstart/ssp-amazon-eks/dist/addons/helm-addon';
 
 export interface RezilionAddOnProps extends HelmAddOnUserProps {
@@ -38,7 +39,14 @@ export class RezilionAddOn extends HelmAddOn {
         // Cloud Map Full Access policy.
         const cloudWatchAgentPolicy = ManagedPolicy.fromAwsManagedPolicyName("CloudWatchAgentServerPolicy");
         sa.role.addManagedPolicy(cloudWatchAgentPolicy);
-        
+
+        const values = this.options.values ?? {api_key: 'no_api_key'};
+        const defaultValues = {
+            apiKey: values.api_key
+        };
+
+        const merged = merge(defaultValues, values);
+
         const chart = this.addHelmChart(clusterInfo, {
             serviceAccount: {
                 create: false,
@@ -46,7 +54,8 @@ export class RezilionAddOn extends HelmAddOn {
             },
             cloudWatch: {
                 region: this.options.cloudWatchRegion
-            } 
+            },
+            values: values
         });
         chart.node.addDependency(sa);
 
