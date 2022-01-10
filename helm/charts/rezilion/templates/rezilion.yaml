@@ -62,7 +62,7 @@ spec:
       - name: rezilioncreds
       containers:
         - name: rezilion-hermes
-          image: ngnix
+          image: public.ecr.aws/n1j6b8j1/632012995384.dkr.ecr.eu-west-1.amazonaws.com/rezilion-hermes:c76d5660
           resources:
             requests:
               memory: "500M"
