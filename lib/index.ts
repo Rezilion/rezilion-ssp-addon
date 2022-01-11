@@ -5,19 +5,18 @@ import merge from "ts-deepmerge";
 import { HelmAddOn, HelmAddOnProps, HelmAddOnUserProps } from '@aws-quickstart/ssp-amazon-eks/dist/addons/helm-addon';
 
 export interface RezilionAddOnProps extends HelmAddOnUserProps {
-    cloudWatchRegion: string
+    apiKey: string
 }
 
 
 export const defaultProps: HelmAddOnProps & RezilionAddOnProps = {
     chart: 'rezilion',
-    cloudWatchRegion: 'us-east-1',
     name: 'rezilion',
     namespace: 'kube-system',
     release: 'rezilion',
     version: '0.0.1',
     repository: 'https://lzl-ssp-helm-test.s3.eu-west-1.amazonaws.com',
-    values: {}
+    apiKey: 'placeholder'
 }
 
 export class RezilionAddOn extends HelmAddOn {
@@ -30,34 +29,11 @@ export class RezilionAddOn extends HelmAddOn {
     }
 
     deploy(clusterInfo: ssp.ClusterInfo): void | Promise<Construct> {
-        const serviceAccountName = 'aws-for-rezilion-sa';
-        const sa = clusterInfo.cluster.addServiceAccount('my-aws-for-rezilion-sa', {
-            name: serviceAccountName,
-            namespace: this.props.namespace
-        });
+        const values = this.options.values ?? {};
+        values['apiKey'] = this.options.apiKey
 
-        // Cloud Map Full Access policy.
-        const cloudWatchAgentPolicy = ManagedPolicy.fromAwsManagedPolicyName("CloudWatchAgentServerPolicy");
-        sa.role.addManagedPolicy(cloudWatchAgentPolicy);
-
-        const values = this.options.values ?? {api_key: 'no_api_key'};
-        const defaultValues = {
-            apiKey: values.api_key
-        };
-
-        const merged = merge(defaultValues, values);
-
-        const chart = this.addHelmChart(clusterInfo, {
-            serviceAccount: {
-                create: false,
-                name: serviceAccountName
-            },
-            cloudWatch: {
-                region: this.options.cloudWatchRegion
-            },
-            values: values
-        });
-        chart.node.addDependency(sa);
+        const chart = this.addHelmChart(clusterInfo,
+            values);
 
         return Promise.resolve(chart);
     }

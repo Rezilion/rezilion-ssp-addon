@@ -62,7 +62,7 @@ spec:
       - name: rezilioncreds
       containers:
         - name: rezilion-hermes
-          image: public.ecr.aws/n1j6b8j1/632012995384.dkr.ecr.eu-west-1.amazonaws.com/rezilion-hermes:c76d5660
+          image: public.ecr.aws/n1j6b8j1/632012995384.dkr.ecr.eu-west-1.amazonaws.com/rezilion-hermes:latest
           resources:
             requests:
               memory: "500M"
@@ -75,7 +75,7 @@ spec:
               command:
                 - /bin/sh
                 - -c
-                - ps -ef | grep maia | grep -v grep || echo "FIXME"
+                - ps -ef | grep maia | grep -v grep
           imagePullPolicy: Always
           securityContext:
             privileged: true
