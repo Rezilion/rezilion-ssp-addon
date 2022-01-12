@@ -15,7 +15,7 @@ export class RezilionAddOn extends HelmAddOn {
 
     readonly apiKey: String;
 
-    constructor(apiKey, props: HelmAddOnProps = defaultProps) {
+    constructor(apiKey: string, props: HelmAddOnProps = defaultProps) {
         super({...defaultProps, ...props});
         this.apiKey = apiKey
     }
