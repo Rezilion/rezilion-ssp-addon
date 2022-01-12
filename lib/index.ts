@@ -1,39 +1,30 @@
-import { ManagedPolicy } from '@aws-cdk/aws-iam';
-import { Construct } from '@aws-cdk/core';
+import {Construct} from '@aws-cdk/core';
 import * as ssp from '@aws-quickstart/ssp-amazon-eks';
-import merge from "ts-deepmerge";
-import { HelmAddOn, HelmAddOnProps, HelmAddOnUserProps } from '@aws-quickstart/ssp-amazon-eks/dist/addons/helm-addon';
+import {HelmAddOn, HelmAddOnProps} from '@aws-quickstart/ssp-amazon-eks/dist/addons/helm-addon';
 
-export interface RezilionAddOnProps extends HelmAddOnUserProps {
-    apiKey: string
-}
-
-
-export const defaultProps: HelmAddOnProps & RezilionAddOnProps = {
+export const defaultProps: HelmAddOnProps = {
     chart: 'rezilion',
     name: 'rezilion',
     namespace: 'kube-system',
     release: 'rezilion',
     version: '0.0.1',
     repository: 'https://lzl-ssp-helm-test.s3.eu-west-1.amazonaws.com',
-    apiKey: 'placeholder'
 }
 
 export class RezilionAddOn extends HelmAddOn {
 
-    readonly options: RezilionAddOnProps;
+    readonly apiKey: String;
 
-    constructor(props: RezilionAddOnProps) {
+    constructor(apiKey, props: HelmAddOnProps = defaultProps) {
         super({...defaultProps, ...props});
-        this.options = this.props as RezilionAddOnProps;
+        this.apiKey = apiKey
     }
 
     deploy(clusterInfo: ssp.ClusterInfo): void | Promise<Construct> {
-        const values = this.options.values ?? {};
-        values['apiKey'] = this.options.apiKey
+        const values = this.props.values ?? {};
+        values['apiKey'] = this.apiKey
 
-        const chart = this.addHelmChart(clusterInfo,
-            values);
+        const chart = this.addHelmChart(clusterInfo, values);
 
         return Promise.resolve(chart);
     }
