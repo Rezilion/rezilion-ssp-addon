@@ -8,7 +8,7 @@ export const defaultProps: HelmAddOnProps = {
     namespace: 'kube-system',
     release: 'rezilion',
     version: '0.0.1',
-    repository: 'https://lzl-ssp-helm-test.s3.eu-west-1.amazonaws.com',
+    repository: 'https://rezilion-ssp.s3.eu-west-1.amazonaws.com',
 }
 
 export class RezilionAddOn extends HelmAddOn {

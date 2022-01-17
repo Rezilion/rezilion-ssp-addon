@@ -62,7 +62,7 @@ spec:
       - name: rezilioncreds
       containers:
         - name: rezilion-hermes
-          image: public.ecr.aws/n1j6b8j1/632012995384.dkr.ecr.eu-west-1.amazonaws.com/rezilion-hermes:latest
+          image: docker.io/rezilion/instrument:1cc96f71
           resources:
             requests:
               memory: "500M"
@@ -101,7 +101,7 @@ spec:
             - name: HERMES_UPLOAD_INTERVAL
               value: 10m
             - name: HERMES_DESTINATION
-              value: /tmp/hermes
+              value: https://api.rezilion.com
             - name: HERMES_EXECUTION_WITHOUT_CGROUPS
               value: periodic-run
             - name: COMMON_API_KEY
