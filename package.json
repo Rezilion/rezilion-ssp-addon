@@ -1,6 +1,6 @@
 {
   "name": "@rezilion/rezilion-ssp-addon",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "scripts": {
     "build": "rm -rf dist && tsc",
     "watch": "tsc -w",
