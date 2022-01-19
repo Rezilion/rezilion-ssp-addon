@@ -8,6 +8,7 @@
     "cdk": "cdk",
     "lint": "npx eslint . --ext .js,.jsx,.ts,.tsx"
   },
+  "main": "lib/index.ts",
   "devDependencies": {
     "@types/jest": "^26.0.10",
     "@types/node": "10.17.27",
