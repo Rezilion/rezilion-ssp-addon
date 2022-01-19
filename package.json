@@ -1,11 +1,8 @@
 {
-  "name": "rezilion-ssp-addon",
-  "version": "0.1.0",
+  "name": "@rezilion/rezilion-ssp-addon",
+  "version": "0.0.1",
   "main": "dist/lib/index.js",
   "types": "dist/lib/index.d.ts",
-  "bin": {
-    "eks-ssp-patterns": "dist/bin/main.js"
-  },
   "scripts": {
     "build": "rm -rf dist && tsc",
     "watch": "tsc -w",
@@ -31,5 +28,25 @@
     "@aws-cdk/core": "1.135.0",
     "@aws-quickstart/ssp-amazon-eks": "^0.12.4",
     "source-map-support": "^0.5.16"
-  }
+  },
+  "description": "Rezilion SSP Addon",
+  "directories": {
+    "lib": "lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rezilion/rezilion-ssp-addon.git"
+  },
+  "keywords": [
+    "Rezilion",
+    "Validate",
+    "SSP",
+    "EKS"
+  ],
+  "author": "Rezilion",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/Rezilion/rezilion-ssp-addon/issues"
+  },
+  "homepage": "https://github.com/Rezilion/rezilion-ssp-addon#readme"
 }
